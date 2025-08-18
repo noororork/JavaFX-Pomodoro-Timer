@@ -1,2 +1,2 @@
-# JavaFX-Pomodoro--Timer
+# JavaFX-Pomodoro-Timer
 Building a Pomodoro study timer using JavaFx
