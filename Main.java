@@ -12,8 +12,7 @@ import javafx.scene.text.*;
 import javafx.geometry.Insets;
 
 public class Main extends Application{
-    private Timerstate nextState;
-    private Timerstate currentState;
+    private TimerState nextState;
 
     @Override
     public void start(Stage stage){
@@ -53,14 +52,15 @@ public class Main extends Application{
         round.setStroke(Color.BLACK);
         round.setBoundsType(TextBoundsType.VISUAL);
 
-        Text state = new Text();
-        state.setFont(new Font(60));
-        state.setText("WORK");
-        state.setStroke(Color.BLACK);
+        Text stateLabel = new Text();
+        stateLabel.setFont(new Font(60));
+        stateLabel.setText("WORK");
+        stateLabel.setStroke(Color.BLACK);
 
         VBox root = new VBox(15);
-        root.getChildren().addAll(state, round, timer, studyCircles);
+        root.getChildren().addAll(stateLabel, round, timer, studyCircles);
         root.setAlignment(Pos.CENTER);
+        
         Scene scene = new Scene(root, 600, 400);
         stage.setScene(scene);
         stage.setTitle("Pomodoro Timer");
