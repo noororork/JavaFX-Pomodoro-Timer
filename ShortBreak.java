@@ -1,10 +1,5 @@
 public class ShortBreak extends State {
     private int time = 5;
-    private Work work;
-
-    public ShortBreak(){
-        work = new Work();
-    }
 
     @Override
     public int getTime(){
@@ -12,8 +7,7 @@ public class ShortBreak extends State {
     }
 
     @Override
-    public State nextState(){
+    public State nextState(int roundCounter, Work work, LongBreak longBreak, ShortBreak shortBreak){
         return work;
-
     }
 }

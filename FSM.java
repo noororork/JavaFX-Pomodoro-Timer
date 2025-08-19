@@ -1,11 +1,18 @@
 public class FSM {
     private State currentState;
-    private State nextState;
+    private int roundCounter = 0;
+
+    private Work work;
+    private LongBreak longBreak;
+    private ShortBreak shortBreak;
 
     public FSM() {
-        currentState = new Work();
+        work = new Work();
+        shortBreak = new ShortBreak();
+        longBreak = new LongBreak();
+        currentState = work;
     }
-    
+
     public State getCurrentState(){
         return currentState;
     }
@@ -14,16 +21,16 @@ public class FSM {
         return currentState.getTime();
     }
 
-    public void updateRoundCounter(){
-        if (currentState.getRoundCounter() == 4){
-            currentState.setRoundCounter(1);
-        } else{
-            currentState.setRoundCounter(currentState.getRoundCounter() + 1);
-        }
+    public int getRoundCounter(){
+        return roundCounter;
     }
 
     public void setNextState(){
-        nextState = currentState.nextState();
-        currentState.setState(nextState);
+        if (roundCounter == 4){
+            roundCounter = 1;
+        }else{
+            roundCounter++;
+        }
+        currentState = currentState.nextState(roundCounter, work, longBreak, shortBreak);
     }
 }

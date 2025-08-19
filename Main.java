@@ -10,8 +10,21 @@ import javafx.scene.control.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.*;
 import javafx.geometry.Insets;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Main extends Application{
+    private FSM fsm = new FSM();
+    private Text timer;
+    private Timeline timeline;
+
+    private void updateTimerLabel(int secondsLeft) {
+        int minutes = secondsLeft / 60;
+        int seconds = secondsLeft % 60;
+        timer.setText(String.format("%02d:%02d", minutes, seconds));
+    }
+
     @Override
     public void start(Stage stage){
         Circle study1 = new Circle();
@@ -38,7 +51,7 @@ public class Main extends Application{
         studyCircles.getChildren().addAll(study1, study2, study3, study4);
         studyCircles.setAlignment(Pos.CENTER);
 
-        Text timer = new Text();
+        timer = new Text();
         timer.setFont(new Font(100));
         timer.setText("00:00");
         timer.setStroke(Color.BLACK);
@@ -63,6 +76,18 @@ public class Main extends Application{
         stage.setScene(scene);
         stage.setTitle("Pomodoro Timer");
         stage.show();
+
+        timeline = new Timeline(
+            new KeyFrame(Duration.seconds(1), e -> {
+                if (fsm.getTime() > 0) {
+                    int newTime = fsm.getTime() - 1;
+                    updateTimerLabel(newTime);
+                } else {
+                    timeline.stop(); // stop when done
+                    // maybe trigger next state
+                }
+            })
+        );
     }
 
     public static void main(String args[]){
