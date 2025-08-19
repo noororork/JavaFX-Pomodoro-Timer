@@ -10,14 +10,11 @@ import javafx.scene.control.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.*;
 import javafx.geometry.Insets;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
+import javafx.application.Platform;
 
 public class Main extends Application{
     private FSM fsm = new FSM();
     private Text timer;
-    private Timeline timeline;
 
     private void updateTimerLabel(int secondsLeft) {
         int minutes = secondsLeft / 60;
@@ -59,7 +56,7 @@ public class Main extends Application{
 
         Text round = new Text();
         round.setFont(new Font(15));
-        round.setText("Round: ");
+        round.setText("Round: 1");
         round.setStroke(Color.BLACK);
         round.setBoundsType(TextBoundsType.VISUAL);
 
@@ -77,18 +74,25 @@ public class Main extends Application{
         stage.setTitle("Pomodoro Timer");
         stage.show();
 
-        timeline = new Timeline(
-            new KeyFrame(Duration.seconds(1), e -> {
-                if (fsm.getTime() > 0) {
-                    int newTime = fsm.getTime() - 1;
-                    updateTimerLabel(newTime);
-                } else {
-                    timeline.stop(); // stop when done
-                    // maybe trigger next state
+
+        stateLabel.setText(fsm.getCurrentName());
+        int timerValue = fsm.getTime();
+
+        Runnable countDown = () -> {
+            for (int i=timerValue; i>=0; i--){
+                final int currentTime = i;
+                Platform.runLater(() -> timer.setText(String.format("%02d:%02d", currentTime/60, currentTime%60)));
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException ex){
+                    ex.printStackTrace();
                 }
-            })
-        );
+            }
+        }; 
+        new Thread(countDown).start();
+
     }
+    
 
     public static void main(String args[]){
         launch(args);

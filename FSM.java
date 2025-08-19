@@ -25,6 +25,10 @@ public class FSM {
         return roundCounter;
     }
 
+    public String getCurrentName(){
+        return currentState.getName();
+    }
+
     public void setNextState(){
         if (roundCounter == 4){
             roundCounter = 1;

@@ -1,9 +1,15 @@
 public class LongBreak extends State {
     private int time = 5;
+    private String name = "LONG BREAK";
 
     @Override
     public int getTime(){
         return time;
+    }
+    
+    @Override
+    public String getName(){
+        return name;
     }
 
     @Override
