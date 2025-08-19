@@ -3,6 +3,7 @@ public abstract class State {
     private int roundCounter;
 
     public State(){
+        this.currentState = new Work();
         this.roundCounter = 0;
     }   
 

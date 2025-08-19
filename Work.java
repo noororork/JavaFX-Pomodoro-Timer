@@ -1,25 +1,24 @@
 public class Work extends State{
     private int time = 10;
-    private State longBreak;
-    private State shortBreak;
+    private LongBreak longBreak;
+    private ShortBreak shortBreak;
 
+    public Work(){
+        longBreak = new LongBreak();
+        shortBreak = new ShortBreak();
+    }
+
+    @Override
     public int getTime(){
         return time;
     }
 
+    @Override
     public State nextState(){
         if (getRoundCounter() == 4){
             return longBreak;
         }else{
             return shortBreak;
-        }
-    }
-
-    public void updateRoundCounter(){
-        if (getRoundCounter() == 4){
-            setRoundCounter(1);
-        } else{
-            setRoundCounter(getRoundCounter() + 1);
         }
     }
 }

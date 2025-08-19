@@ -12,8 +12,6 @@ import javafx.scene.text.*;
 import javafx.geometry.Insets;
 
 public class Main extends Application{
-    private TimerState nextState;
-
     @Override
     public void start(Stage stage){
         Circle study1 = new Circle();
