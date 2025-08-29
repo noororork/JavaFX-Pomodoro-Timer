@@ -11,10 +11,23 @@ import javafx.geometry.Pos;
 import javafx.scene.text.*;
 import javafx.geometry.Insets;
 import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class Main extends Application{
     private FSM fsm = new FSM();
+    private boolean running = true;
+    private Timeline currentTimeline;
+    private int remainingTime;
+
+    private Circle study1;
+    private Circle study2;
+    private Circle study3;
+    private Circle study4;
     private Text timer;
+    private Text round;
+    private Text stateLabel;
 
     private void updateTimerLabel(int secondsLeft) {
         int minutes = secondsLeft / 60;
@@ -24,22 +37,22 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage){
-        Circle study1 = new Circle();
+        study1 = new Circle();
         study1.setRadius(5);
         study1.setStroke(Color.GRAY);
         study1.setFill(null);
 
-        Circle study2 = new Circle();
+        study2 = new Circle();
         study2.setRadius(5);
         study2.setStroke(Color.GRAY);
         study2.setFill(null);
 
-        Circle study3 = new Circle();
+        study3 = new Circle();
         study3.setRadius(5);
         study3.setStroke(Color.GRAY);
         study3.setFill(null);
 
-        Circle study4 = new Circle();
+        study4 = new Circle();
         study4.setRadius(5);
         study4.setStroke(Color.GRAY);
         study4.setFill(null);
@@ -54,13 +67,13 @@ public class Main extends Application{
         timer.setStroke(Color.BLACK);
         timer.setBoundsType(TextBoundsType.VISUAL);
 
-        Text round = new Text();
+        round = new Text();
         round.setFont(new Font(15));
         round.setText("Round: 1");
         round.setStroke(Color.BLACK);
         round.setBoundsType(TextBoundsType.VISUAL);
 
-        Text stateLabel = new Text();
+        stateLabel = new Text();
         stateLabel.setFont(new Font(60));
         stateLabel.setText("WORK");
         stateLabel.setStroke(Color.BLACK);
@@ -74,25 +87,50 @@ public class Main extends Application{
         stage.setTitle("Pomodoro Timer");
         stage.show();
 
-
-        stateLabel.setText(fsm.getCurrentName());
-        int timerValue = fsm.getTime();
-
-        Runnable countDown = () -> {
-            for (int i=timerValue; i>=0; i--){
-                final int currentTime = i;
-                Platform.runLater(() -> timer.setText(String.format("%02d:%02d", currentTime/60, currentTime%60)));
-                try {
-                    Thread.sleep(1000);
-                } catch(InterruptedException ex){
-                    ex.printStackTrace();
-                }
-            }
-        }; 
-        new Thread(countDown).start();
+        startCountdown();
 
     }
-    
+
+    private void startCountdown(){
+        stateLabel.setText(fsm.getCurrentName());
+        remainingTime = fsm.getTime();
+        if (fsm.getCurrentName().equals("WORK"))
+            switch (fsm.getRoundCounter()){
+                case 1: 
+                    study1.setFill(Color.BLACK);
+                    study2.setFill(null);
+                    study3.setFill(null);
+                    study4.setFill(null);
+                    break;
+                case 2:
+                    study2.setFill(Color.BLACK);
+                    break;
+                case 3:
+                    study3.setFill(Color.BLACK);
+                    break;
+                case 4:
+                    study4.setFill(Color.BLACK);
+                    break;
+            }
+
+        currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
+                    
+            if (remainingTime == 0) {
+                currentTimeline.stop();
+                currentTimeline = null;
+                
+                fsm.setNextState();
+                startCountdown();
+            }
+
+            remainingTime--;
+        }));
+
+        currentTimeline.setCycleCount(Timeline.INDEFINITE);
+        currentTimeline.play();
+
+    }   
 
     public static void main(String args[]){
         launch(args);

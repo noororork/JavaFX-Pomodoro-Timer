@@ -1,5 +1,5 @@
 public class ShortBreak extends State {
-    private int time = 5;
+    private int time = 3;
     private String name = "SHORT BREAK";
 
     @Override

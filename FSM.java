@@ -1,6 +1,6 @@
 public class FSM {
     private State currentState;
-    private int roundCounter = 0;
+    private int roundCounter = 1;
 
     private Work work;
     private LongBreak longBreak;
@@ -30,11 +30,13 @@ public class FSM {
     }
 
     public void setNextState(){
-        if (roundCounter == 4){
-            roundCounter = 1;
-        }else{
-            roundCounter++;
-        }
         currentState = currentState.nextState(roundCounter, work, longBreak, shortBreak);
+        if (currentState instanceof Work){
+            if (roundCounter == 4){
+                roundCounter = 1;
+            }else{
+                roundCounter++;
+            }
+        }
     }
 }
