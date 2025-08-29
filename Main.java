@@ -113,17 +113,15 @@ public class Main extends Application{
                     break;
             }
 
-        currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
-                    
-            if (remainingTime == 0) {
+        currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {                    
+            if (remainingTime == -1) {
                 currentTimeline.stop();
                 currentTimeline = null;
                 
                 fsm.setNextState();
                 startCountdown();
             }
-
+            timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
             remainingTime--;
         }));
 
