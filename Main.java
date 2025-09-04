@@ -17,9 +17,10 @@ import javafx.util.Duration;
 
 public class Main extends Application{
     private FSM fsm = new FSM();
-    private boolean running[] = {true};
+    private boolean running[] = {false};
     private Timeline currentTimeline;
     private int remainingTime;
+    private boolean started[] = {false};
 
     private Circle study1;
     private Circle study2;
@@ -92,14 +93,16 @@ public class Main extends Application{
 
         start.setOnAction(e -> {
             running[0] = !running[0];
+            if (!started[0]){
+                started[0] = true;
+                startCountdown();
+            }
             if (running[0]){
                 start.setText("Pause");
             }else{
                 start.setText("Play");
             }
         });
-
-        startCountdown();
     }
 
     private void startCountdown(){
