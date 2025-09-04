@@ -20,7 +20,6 @@ public class Main extends Application{
     private boolean running[] = {true};
     private Timeline currentTimeline;
     private int remainingTime;
-    private int clickCount[] = {0};
 
     private Circle study1;
     private Circle study2;
@@ -91,28 +90,16 @@ public class Main extends Application{
         stage.setTitle("Pomodoro Timer");
         stage.show();
 
-        setStartButton();
-    }
-
-    private void setStartButton(){
-        if (clickCount[0] == 0){
-            start.setOnAction(e -> {
+        start.setOnAction(e -> {
+            running[0] = !running[0];
+            if (running[0]){
                 start.setText("Pause");
-                startCountdown();
-            });
-        }
-        else if ((clickCount[0] % 2) == 0){
-            start.setOnAction(e -> {
-                start.setText("Pause");
-                running[0] = true;
-            });
-        }else{
-            start.setOnAction(e -> {
+            }else{
                 start.setText("Play");
-                running[0] = false;
-            });
-        }
-        clickCount[0]++;
+            }
+        });
+
+        startCountdown();
     }
 
     private void startCountdown(){
@@ -138,15 +125,14 @@ public class Main extends Application{
             }
 
         currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {                    
-            if (remainingTime == -1) {
-                currentTimeline.stop();
-                currentTimeline = null;
-                
-                fsm.setNextState();
-                startCountdown();
-            }
-            setStartButton();
-            if (running[0] == true){
+            if (running[0]){
+                if (remainingTime == -1) {
+                    currentTimeline.stop();
+                    currentTimeline = null;
+                    
+                    fsm.setNextState();
+                    startCountdown();
+                }
                 timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
                 remainingTime--;
             }
