@@ -81,12 +81,15 @@ public class Main extends Application{
         stateLabel.setStroke(Color.BLACK);
 
         start = new Button("Start");
+        start.getStyleClass().add("start");
 
         VBox root = new VBox(15);
         root.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
         root.setAlignment(Pos.CENTER);
+        start.getStyleClass().add("root");
         
         Scene scene = new Scene(root, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());;
         stage.setScene(scene);
         stage.setTitle("Pomodoro Timer");
         stage.show();

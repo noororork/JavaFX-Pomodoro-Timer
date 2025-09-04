@@ -1,0 +1,14 @@
+.button.start { /* using button.start to give it priority so its not overwritten by root */
+    -fx-background-color: #F08787;
+    -fx-text-fill: white;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 20px;
+    -fx-font-size: 20px;
+    -fx-font-family: "Lucida Console";
+}
+
+
+
+.root {
+    -fx-background-color: #FEE2AD;
+}
