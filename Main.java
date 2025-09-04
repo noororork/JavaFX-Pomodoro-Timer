@@ -17,9 +17,10 @@ import javafx.util.Duration;
 
 public class Main extends Application{
     private FSM fsm = new FSM();
-    private boolean running = true;
+    private boolean running[] = {true};
     private Timeline currentTimeline;
     private int remainingTime;
+    private int clickCount[] = {0};
 
     private Circle study1;
     private Circle study2;
@@ -28,6 +29,7 @@ public class Main extends Application{
     private Text timer;
     private Text round;
     private Text stateLabel;
+    private Button start;
 
     private void updateTimerLabel(int secondsLeft) {
         int minutes = secondsLeft / 60;
@@ -78,8 +80,10 @@ public class Main extends Application{
         stateLabel.setText("WORK");
         stateLabel.setStroke(Color.BLACK);
 
+        start = new Button("Start");
+
         VBox root = new VBox(15);
-        root.getChildren().addAll(stateLabel, round, timer, studyCircles);
+        root.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
         root.setAlignment(Pos.CENTER);
         
         Scene scene = new Scene(root, 600, 400);
@@ -87,8 +91,28 @@ public class Main extends Application{
         stage.setTitle("Pomodoro Timer");
         stage.show();
 
-        startCountdown();
+        setStartButton();
+    }
 
+    private void setStartButton(){
+        if (clickCount[0] == 0){
+            start.setOnAction(e -> {
+                start.setText("Pause");
+                startCountdown();
+            });
+        }
+        else if ((clickCount[0] % 2) == 0){
+            start.setOnAction(e -> {
+                start.setText("Pause");
+                running[0] = true;
+            });
+        }else{
+            start.setOnAction(e -> {
+                start.setText("Play");
+                running[0] = false;
+            });
+        }
+        clickCount[0]++;
     }
 
     private void startCountdown(){
@@ -121,8 +145,11 @@ public class Main extends Application{
                 fsm.setNextState();
                 startCountdown();
             }
-            timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
-            remainingTime--;
+            setStartButton();
+            if (running[0] == true){
+                timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
+                remainingTime--;
+            }
         }));
 
         currentTimeline.setCycleCount(Timeline.INDEFINITE);
