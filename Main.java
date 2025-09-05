@@ -27,8 +27,8 @@ public class Main extends Application{
     private Circle study3;
     private Circle study4;
     private Text timer;
-    private Text round;
-    private Text stateLabel;
+    private Label round;
+    private Label stateLabel;
     private Button start;
 
     private void updateTimerLabel(int secondsLeft) {
@@ -41,30 +41,27 @@ public class Main extends Application{
     public void start(Stage stage){
         study1 = new Circle();
         study1.setRadius(5);
-        study1.setStroke(Color.web("0xa36361"));
+        study1.setStroke(Color.web("#647FBC"));
         study1.setFill(null);
         study1.getStyleClass().add("study1");
 
         study2 = new Circle();
         study2.setRadius(5);
-        study2.setStroke(Color.web("0xa36361"));
+        study2.setStroke(Color.web("#647FBC"));
         study2.setFill(null);
         study2.getStyleClass().add("study2");
 
-
         study3 = new Circle();
         study3.setRadius(5);
-        study3.setStroke(Color.web("0xa36361"));
+        study3.setStroke(Color.web("#647FBC"));
         study3.setFill(null);
         study3.getStyleClass().add("study3");
 
-
         study4 = new Circle();
         study4.setRadius(5);
-        study4.setStroke(Color.web("0xa36361"));
+        study4.setStroke(Color.web("#647FBC"));
         study4.setFill(null);
         study4.getStyleClass().add("study4");
-
 
         HBox studyCircles = new HBox(10); // 10 Pixels of spacing between
         studyCircles.getChildren().addAll(study1, study2, study3, study4);
@@ -73,20 +70,22 @@ public class Main extends Application{
         timer = new Text();
         timer.setFont(new Font(100));
         timer.setText("00:00");
+        timer.setStroke(Color.web("#FAFDD6"));
+        timer.setFill(Color.web("#FAFDD6"));
         timer.setBoundsType(TextBoundsType.VISUAL);
         timer.getStyleClass().add("timer");
 
-        round = new Text();
+        round = new Label();
         round.setFont(new Font(15));
         round.setText("Round 1");
-        round.setStroke(Color.BLACK);
-        round.setBoundsType(TextBoundsType.VISUAL);
+        round.setTextFill(Color.web("#FAFDD6"));
+        round.getStyleClass().add("round");
 
-        stateLabel = new Text();
+        stateLabel = new Label();
         stateLabel.setFont(new Font(60));
         stateLabel.setText("WORK");
-        stateLabel.setFill(Color.web("0xa36361"));
-        stateLabel.setStroke(Color.web("0xa36361"));
+        stateLabel.setTextFill(Color.web("#647FBC"));
+        stateLabel.getStyleClass().add("stateLabel");
 
         start = new Button("Start");
         start.getStyleClass().add("start");
@@ -123,19 +122,19 @@ public class Main extends Application{
         if (fsm.getCurrentName().equals("WORK"))
             switch (fsm.getRoundCounter()){
                 case 1: 
-                    study1.setFill(Color.web("0xbf6d6d"));
+                    study1.setFill(Color.web("#647FBC"));
                     study2.setFill(null);
                     study3.setFill(null);
                     study4.setFill(null);
                     break;
                 case 2:
-                    study2.setFill(Color.web("0xbf6d6d"));
+                    study2.setFill(Color.web("#647FBC"));
                     break;
                 case 3:
-                    study3.setFill(Color.web("0xbf6d6d"));
+                    study3.setFill(Color.web("#647FBC"));
                     break;
                 case 4:
-                    study4.setFill(Color.web("0xbf6d6d"));
+                    study4.setFill(Color.web("#647FBC"));
                     break;
             }
 
