@@ -28,6 +28,10 @@
     -fx-padding: 3 0 -10 0;
 }
 
+.settingsScene {
+    -fx-background-color: #91ADC8;
+}
+
 .root {
     -fx-background-color: #AED6CF;
 }

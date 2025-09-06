@@ -96,13 +96,28 @@ public class Main extends Application{
         start = new Button("Start");
         start.getStyleClass().add("start");
 
-        Button settings = new Button("Settings");
+        // Settings menu that will pop up on button press
+        VBox settingsScene = new VBox(15);
+        settingsScene.setVisible(false);
+        Label settingsTitle = new Label("Settings");
+        settingsScene.getChildren().addAll(settingsTitle);
+        settingsScene.setMinSize(450, 300);
+        settingsScene.setMaxSize(450, 300);
+        settingsScene.setAlignment(Pos.CENTER);
+        settingsScene.getStyleClass().add("settingsScene");
+
+        // Settings button that adds settings overlay
+        Button settings = new Button("settings");
+        settings.setOnAction(e -> {
+            settingsScene.setVisible(true);
+            System.out.println("Clicked");
+        });
 
         VBox main = new VBox(15);
         main.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
         main.setAlignment(Pos.CENTER);
         StackPane root = new StackPane();
-        root.getChildren().addAll(main, settings);
+        root.getChildren().addAll(main, settingsScene, settings);
         StackPane.setAlignment(settings, Pos.TOP_RIGHT);
         root.getStyleClass().add("root");
         
