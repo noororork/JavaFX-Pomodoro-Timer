@@ -39,6 +39,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage stage){
+        // Circles that indicate which stage of work you are within the round
         study1 = new Circle();
         study1.setRadius(5);
         study1.setStroke(Color.web("#647FBC"));
@@ -63,10 +64,12 @@ public class Main extends Application{
         study4.setFill(null);
         study4.getStyleClass().add("study4");
 
+        // Placing them in a row
         HBox studyCircles = new HBox(10); // 10 Pixels of spacing between
         studyCircles.getChildren().addAll(study1, study2, study3, study4);
         studyCircles.setAlignment(Pos.CENTER);
 
+        // Central timer
         timer = new Text();
         timer.setFont(new Font(100));
         timer.setText("00:00");
@@ -74,19 +77,22 @@ public class Main extends Application{
         timer.setFill(Color.web("#FAFDD6"));
         timer.setBoundsType(TextBoundsType.VISUAL);
         timer.getStyleClass().add("timer");
-
+        
+        // States which round we are in
         round = new Label();
         round.setFont(new Font(15));
         round.setText("Round 1");
         round.setTextFill(Color.web("#FAFDD6"));
         round.getStyleClass().add("round");
 
+        // States whether we are studying, or on a break
         stateLabel = new Label();
         stateLabel.setFont(new Font(60));
         stateLabel.setText("WORK");
         stateLabel.setTextFill(Color.web("#647FBC"));
         stateLabel.getStyleClass().add("stateLabel");
 
+        // Start button that will also become play and pause
         start = new Button("Start");
         start.getStyleClass().add("start");
 
@@ -101,6 +107,7 @@ public class Main extends Application{
         stage.setTitle("Pomodoro Timer");
         stage.show();
 
+        // Toggles the pause and play
         start.setOnAction(e -> {
             running[0] = !running[0];
             if (!started[0]){
@@ -116,6 +123,7 @@ public class Main extends Application{
     }
 
     private void startCountdown(){
+        // Handles start and circle filling
         stateLabel.setText(fsm.getCurrentName());
         round.setText("Round " + fsm.getWholeCounter());
         remainingTime = fsm.getTime();
@@ -137,7 +145,8 @@ public class Main extends Application{
                     study4.setFill(Color.web("#647FBC"));
                     break;
             }
-
+        
+        // Handles countdown logic
         currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {                    
             if (running[0]){
                 if (remainingTime == -1) {
