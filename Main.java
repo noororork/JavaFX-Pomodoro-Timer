@@ -96,9 +96,14 @@ public class Main extends Application{
         start = new Button("Start");
         start.getStyleClass().add("start");
 
-        VBox root = new VBox(15);
-        root.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
-        root.setAlignment(Pos.CENTER);
+        Button settings = new Button("Settings");
+
+        VBox main = new VBox(15);
+        main.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
+        main.setAlignment(Pos.CENTER);
+        StackPane root = new StackPane();
+        root.getChildren().addAll(main, settings);
+        StackPane.setAlignment(settings, Pos.TOP_RIGHT);
         root.getStyleClass().add("root");
         
         Scene scene = new Scene(root, 600, 400);
