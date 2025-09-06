@@ -32,6 +32,19 @@
     -fx-background-color: #91ADC8;
 }
 
+.settingsTitle {
+    -fx-font-size: 20px;
+    -fx-font-family: "Lucida Console";
+    -fx-padding: 10;
+}
+
+.settings {
+    -fx-font-size: 15px;
+    -fx-font-family: "Lucida Console";
+    -fx-background-color: #AED6CF;
+    -fx-padding: 25 20 0 0;
+}
+
 .root {
     -fx-background-color: #AED6CF;
 }

@@ -21,6 +21,7 @@ public class Main extends Application{
     private Timeline currentTimeline;
     private int remainingTime;
     private boolean started[] = {false};
+    private boolean settingsOpened[] = {false};
 
     private Circle study1;
     private Circle study2;
@@ -96,22 +97,36 @@ public class Main extends Application{
         start = new Button("Start");
         start.getStyleClass().add("start");
 
+        // Populating the settings menu
+        Label settingsTitle = new Label("Settings");
+        settingsTitle.setTextFill(Color.web("#FAFDD6"));
+        settingsTitle.getStyleClass().add("settingsTitle");
+
         // Settings menu that will pop up on button press
         VBox settingsScene = new VBox(15);
         settingsScene.setVisible(false);
-        Label settingsTitle = new Label("Settings");
         settingsScene.getChildren().addAll(settingsTitle);
         settingsScene.setMinSize(450, 300);
         settingsScene.setMaxSize(450, 300);
-        settingsScene.setAlignment(Pos.CENTER);
+        settingsScene.setAlignment(Pos.TOP_CENTER);
         settingsScene.getStyleClass().add("settingsScene");
 
         // Settings button that adds settings overlay
         Button settings = new Button("settings");
+        settings.setTextFill(Color.web("#FAFDD6"));
         settings.setOnAction(e -> {
-            settingsScene.setVisible(true);
-            System.out.println("Clicked");
+            settingsOpened[0] = !settingsOpened[0];
+            if (settingsOpened[0]){
+                settingsScene.setVisible(true);
+                settings.setText("close");
+                settings.setTextFill(Color.web("#647FBC"));
+            } else {
+                settingsScene.setVisible(false);
+                settings.setText("settings");
+                settings.setTextFill(Color.web("#FAFDD6"));
+            }
         });
+        settings.getStyleClass().add("settings");
 
         VBox main = new VBox(15);
         main.getChildren().addAll(stateLabel, round, timer, studyCircles, start);
@@ -176,7 +191,11 @@ public class Main extends Application{
                     fsm.setNextState();
                     startCountdown();
                 }
-                timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
+                if (remainingTime < 3600){
+                    timer.setText(String.format("%02d:%02d", remainingTime/60, remainingTime%60)); 
+                } else {
+                    timer.setText(String.format("%02d:%02d:%02d", remainingTime/3600, (remainingTime%3600) / 60, (remainingTime%60)));               
+                }
                 remainingTime--;
             }
         }));
