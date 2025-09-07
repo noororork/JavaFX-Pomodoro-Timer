@@ -1,6 +1,6 @@
 .button.start { /* using button.start to give it priority so its not overwritten by root */
-    -fx-background-color: #647FBC;
-    -fx-text-fill: #FAFDD6;
+    -fx-background-color: -dark-color;
+    -fx-text-fill: -light-color;
     -fx-pref-width: 200px;
     -fx-pref-height: 20px;
     -fx-font-size: 20px;
@@ -8,7 +8,7 @@
 }
 
 .button.start:hover {
-    -fx-background-color: #91ADC8;
+    -fx-background-color: -second-bg-color;
 }
 
 .button.start:pressed {
@@ -20,21 +20,21 @@
 
 .label {
     -fx-font-family: "Lucida Console";
-    -fx-text-fill: #FAFDD6;
+    -fx-text-fill: -light-color;
     -fx-font-size: 10px;
     -fx-padding: 5;
 }
 
 .label.enterTimeLabel {
     -fx-font-family: "Lucida Console";
-    -fx-text-fill: #FAFDD6;
+    -fx-text-fill: -light-color;
     -fx-padding: 10;
     -fx-font-size: 11px; 
 }
 
 .label.stateLabel {
     -fx-padding: 0 0 -15 0; 
-    -fx-text-fill: #647FBC;
+    -fx-text-fill: -dark-color;
     -fx-font-size: 60px;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .settingsScene {
-    -fx-background-color: #91ADC8;
+    -fx-background-color: -second-bg-color;
 }
 
 .label.settingsTitle {
@@ -55,18 +55,18 @@
 .settings {
     -fx-font-size: 15px;
     -fx-font-family: "Lucida Console";
-    -fx-background-color: #AED6CF;
+    -fx-background-color: -bg-color;
     -fx-padding: 25 20 0 0;
 }
 
 .spinner {
-    -fx-background-color: #AED6CF;
-    -fx-border-color: #AED6CF;
+    -fx-background-color: -bg-color;
+    -fx-border-color: -bg-color;
 }
 
 .button.saveTime {
-    -fx-background-color: #647FBC;
-    -fx-text-fill: #FAFDD6;
+    -fx-background-color: -dark-color;
+    -fx-text-fill: -light-color;
     -fx-pref-width: 150px;
     -fx-pref-height: 20px;
     -fx-font-size: 12px;
@@ -75,5 +75,5 @@
 }
 
 .root {
-    -fx-background-color: #AED6CF;
+    -fx-background-color: -bg-color;
 }
