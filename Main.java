@@ -216,7 +216,7 @@ public class Main extends Application{
         saveTime.getStyleClass().add("saveTime");
 
         // Color palette picker
-        chooseColors = new Label("Choose color palette");
+        chooseColors = new Label("Choose color palette:");
         color1 = new Button("");
         color1.getStyleClass().add("color1");
         color1.setOnAction(e -> {
@@ -235,6 +235,7 @@ public class Main extends Application{
             study3.setStroke(Color.web(darkColor[0]));
             study4.setStroke(Color.web(darkColor[0]));
             settings.setTextFill(Color.web(darkColor[0]));
+            fillCircles();
         });
         color2 = new Button("");
         color2.getStyleClass().add("color2");
@@ -244,16 +245,17 @@ public class Main extends Application{
             root.setStyle(
                 "-light-color: #E8FFD7;" +
                 "-dark-color: #3E5F44;" +
-                "-bg-color: #5E936C;" +
-                "-second-bg-color: #93DA97;" +
+                "-bg-color: #93DA97;" +
+                "-second-bg-color: #5E936C;" +
 
-                "-fx-background-color: #5E936C;"
+                "-fx-background-color: #93DA97;"
             );
             study1.setStroke(Color.web(darkColor[0]));
             study2.setStroke(Color.web(darkColor[0]));
             study3.setStroke(Color.web(darkColor[0]));
             study4.setStroke(Color.web(darkColor[0]));
             settings.setTextFill(Color.web(darkColor[0]));
+            fillCircles();
         });
         color3 = new Button("");
         color3.getStyleClass().add("color3");
@@ -263,16 +265,17 @@ public class Main extends Application{
             root.setStyle(
                 "-light-color: #fdd8f8ff;" +
                 "-dark-color: #762861ff;" +
-                "-bg-color: #C562AF;" +
-                "-second-bg-color: #c688beff;" +
+                "-bg-color: #c688beff;" +
+                "-second-bg-color: #C562AF;" +
 
-                "-fx-background-color: #C562AF;"
+                "-fx-background-color: #c688beff;"
             );
             study1.setStroke(Color.web(darkColor[0]));
             study2.setStroke(Color.web(darkColor[0]));
             study3.setStroke(Color.web(darkColor[0]));
             study4.setStroke(Color.web(darkColor[0]));
             settings.setTextFill(Color.web(darkColor[0]));
+            fillCircles();
         });
         color4 = new Button("");
         color4.getStyleClass().add("color4");
@@ -282,16 +285,17 @@ public class Main extends Application{
             root.setStyle(
                 "-light-color: #fdd8f8ff;" +
                 "-dark-color: #8F87F1;" +
-                "-bg-color: #C68EFD;" +
-                "-second-bg-color: #E9A5F1;" +
+                "-bg-color: #E9A5F1;" +
+                "-second-bg-color: #C68EFD;" +
 
-                "-fx-background-color: #C68EFD;"
+                "-fx-background-color: #E9A5F1;"
             );
             study1.setStroke(Color.web(darkColor[0]));
             study2.setStroke(Color.web(darkColor[0]));
             study3.setStroke(Color.web(darkColor[0]));
             study4.setStroke(Color.web(darkColor[0]));
             settings.setTextFill(Color.web(darkColor[0]));
+            fillCircles();
         });
         colorPickers = new HBox(10);
         colorPickers.setAlignment(Pos.CENTER);
@@ -316,6 +320,11 @@ public class Main extends Application{
                 timer.setText(String.format("%02d:%02d", newTime/60, newTime%60)); 
             } else {
                 timer.setText(String.format("%02d:%02d:%02d", newTime/3600, (newTime%3600) / 60, (newTime%60)));               
+            }
+            start.setText("Start");
+            if (currentTimeline != null){
+                currentTimeline.stop();
+                currentTimeline = null;
             }
             study1.setFill(null);
             study2.setFill(null);
@@ -383,11 +392,7 @@ public class Main extends Application{
         });
     }
 
-    private void startCountdown(){
-        // Handles start and circle filling
-        stateLabel.setText(fsm.getCurrentName());
-        round.setText("Round " + fsm.getWholeCounter());
-        remainingTime = fsm.getTime();
+    private void fillCircles(){
         if (fsm.getCurrentName().equals("WORK"))
             switch (fsm.getRoundCounter()){
                 case 1: 
@@ -406,6 +411,14 @@ public class Main extends Application{
                     study4.setFill(Color.web(darkColor[0]));
                     break;
             }
+        }
+
+    private void startCountdown(){
+        // Handles start and circle filling
+        stateLabel.setText(fsm.getCurrentName());
+        round.setText("Round " + fsm.getWholeCounter());
+        remainingTime = fsm.getTime();
+        fillCircles();
         
         // Handles countdown logic
         currentTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {                    

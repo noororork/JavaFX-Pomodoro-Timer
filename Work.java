@@ -1,5 +1,5 @@
 public class Work extends State{
-    private int time = 3610;
+    private int time = 7;
     private String name = "WORK";
 
     @Override
