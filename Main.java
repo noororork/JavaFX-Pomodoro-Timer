@@ -23,6 +23,10 @@ public class Main extends Application{
     private boolean started[] = {false};
     private boolean settingsOpened[] = {false};
 
+    private Work work = new Work();
+    private ShortBreak sb = new ShortBreak();
+    private LongBreak lb = new LongBreak();
+
     private Circle study1;
     private Circle study2;
     private Circle study3;
@@ -31,12 +35,7 @@ public class Main extends Application{
     private Label round;
     private Label stateLabel;
     private Button start;
-
-    private void updateTimerLabel(int secondsLeft) {
-        int minutes = secondsLeft / 60;
-        int seconds = secondsLeft % 60;
-        timer.setText(String.format("%02d:%02d", minutes, seconds));
-    }
+    private VBox settingsScene;
 
     @Override
     public void start(Stage stage){
@@ -73,7 +72,12 @@ public class Main extends Application{
         // Central timer
         timer = new Text();
         timer.setFont(new Font(100));
-        timer.setText("00:00");
+        int time = fsm.getTime();
+        if (time < 3600){
+            timer.setText(String.format("%02d:%02d", time/60, time%60)); 
+        } else {
+            timer.setText(String.format("%02d:%02d:%02d", time/3600, (time%3600) / 60, (time%60)));               
+        }
         timer.setStroke(Color.web("#FAFDD6"));
         timer.setFill(Color.web("#FAFDD6"));
         timer.setBoundsType(TextBoundsType.VISUAL);
@@ -81,14 +85,12 @@ public class Main extends Application{
         
         // States which round we are in
         round = new Label();
-        round.setFont(new Font(15));
         round.setText("Round 1");
         round.setTextFill(Color.web("#FAFDD6"));
         round.getStyleClass().add("round");
 
         // States whether we are studying, or on a break
         stateLabel = new Label();
-        stateLabel.setFont(new Font(60));
         stateLabel.setText("WORK");
         stateLabel.setTextFill(Color.web("#647FBC"));
         stateLabel.getStyleClass().add("stateLabel");
@@ -102,18 +104,108 @@ public class Main extends Application{
         settingsTitle.setTextFill(Color.web("#FAFDD6"));
         settingsTitle.getStyleClass().add("settingsTitle");
 
+         // Settings button that adds settings overlay
+        Button settings = new Button("settings");
+        settings.setTextFill(Color.web("#FAFDD6"));
+        settings.getStyleClass().add("settings");
+
+        // Time selector in settings
+        // Work
+        Label workTime = new Label("Select work duration: ");
+        workTime.getStyleClass().add("enterTimeLabel");
+        Label workHours = new Label("Hours:");
+        Spinner<Integer> workHoursSelector = new Spinner<>(0, 59, 0); // min, max, inital
+        workHoursSelector.setPrefSize(60, 25);
+        workHoursSelector.setEditable(true); // Allows typing
+        Label workMins = new Label("Mins:");
+        Spinner<Integer> workMinutesSelector = new Spinner<>(0, 59, 25); // min, max, inital
+        workMinutesSelector.setPrefSize(60, 25);
+        workMinutesSelector.setEditable(true);
+
+        HBox workSpinners = new HBox();
+        workSpinners.getChildren().addAll(workTime, workHours, workHoursSelector, workMins, workMinutesSelector);
+        workSpinners.setAlignment(Pos.CENTER);
+
+        // Short Break
+        Label sbTime = new Label("Select short break duration: ");
+        sbTime.getStyleClass().add("enterTimeLabel");
+        Label sbHours = new Label("Hours:");
+        Spinner<Integer> sbHoursSelector = new Spinner<>(0, 59, 0); // min, max, inital
+        sbHoursSelector.setPrefSize(60, 25);
+        sbHoursSelector.setEditable(true);
+        Label sbMins = new Label("Mins:");
+        Spinner<Integer> sbMinutesSelector = new Spinner<>(0, 59, 5); // min, max, inital
+        sbMinutesSelector.setPrefSize(60, 25);
+        sbMinutesSelector.setEditable(true);
+
+        HBox sbSpinners = new HBox();
+        sbSpinners.getChildren().addAll(sbTime, sbHours, sbHoursSelector, sbMins, sbMinutesSelector);
+        sbSpinners.setAlignment(Pos.CENTER);
+
+        // Long Break
+        Label lbTime = new Label("Select long break duration: ");
+        lbTime.getStyleClass().add("enterTimeLabel");
+        Label lbHours = new Label("Hours:");
+        Spinner<Integer> lbHoursSelector = new Spinner<>(0, 59, 0); // min, max, inital
+        lbHoursSelector.setPrefSize(60, 25);
+        lbHoursSelector.setEditable(true);
+        Label lbMins = new Label("Mins:");
+        Spinner<Integer> lbMinutesSelector = new Spinner<>(0, 59, 15); // min, max, inital
+        lbMinutesSelector.setPrefSize(60, 25);
+        lbMinutesSelector.setEditable(true);
+
+        HBox lbSpinners = new HBox();
+        lbSpinners.getChildren().addAll(lbTime, lbHours, lbHoursSelector, lbMins, lbMinutesSelector);
+        lbSpinners.setAlignment(Pos.CENTER);
+
+        // Button to save changes
+        Button saveTime = new Button("Save Changes");
+        saveTime.getStyleClass().add("saveTime");
+        
+        saveTime.setOnAction(e -> {
+            // Setting new values
+            int workTotal = workHoursSelector.getValue()*3600 + workMinutesSelector.getValue()*60;
+            int sbTotal = sbHoursSelector.getValue()*3600 + sbMinutesSelector.getValue()*60;
+            int lbTotal = lbHoursSelector.getValue()*3600 + lbMinutesSelector.getValue()*60;
+            fsm.setTime(workTotal, work);
+            fsm.setTime(sbTotal, sb);
+            fsm.setTime(lbTotal, lb);
+
+            // Resetting format
+            fsm.setCurrentState(work);
+            stateLabel.setText(fsm.getCurrentName());
+            fsm.setWholeCounter(1);
+            round.setText("Round " + fsm.getWholeCounter());
+            int newTime = fsm.getTime();
+            if (newTime < 3600){
+                timer.setText(String.format("%02d:%02d", newTime/60, newTime%60)); 
+            } else {
+                timer.setText(String.format("%02d:%02d:%02d", newTime/3600, (newTime%3600) / 60, (newTime%60)));               
+            }
+            study1.setFill(null);
+            study2.setFill(null);
+            study3.setFill(null);
+            study4.setFill(null);
+            
+            // Resetting defualt states
+            running[0] = false;
+            started[0] = false;
+            settingsOpened[0] = false;
+            settingsScene.setVisible(false);
+            settings.setText("settings");
+            settings.setTextFill(Color.web("#FAFDD6"));
+        });
+
         // Settings menu that will pop up on button press
-        VBox settingsScene = new VBox(15);
+        settingsScene = new VBox(15);
         settingsScene.setVisible(false);
-        settingsScene.getChildren().addAll(settingsTitle);
+        settingsScene.getChildren().addAll(settingsTitle, workSpinners, sbSpinners, lbSpinners, saveTime);
         settingsScene.setMinSize(450, 300);
         settingsScene.setMaxSize(450, 300);
         settingsScene.setAlignment(Pos.TOP_CENTER);
         settingsScene.getStyleClass().add("settingsScene");
 
-        // Settings button that adds settings overlay
-        Button settings = new Button("settings");
-        settings.setTextFill(Color.web("#FAFDD6"));
+        // Opening of the settings button
         settings.setOnAction(e -> {
             settingsOpened[0] = !settingsOpened[0];
             if (settingsOpened[0]){
@@ -126,7 +218,6 @@ public class Main extends Application{
                 settings.setTextFill(Color.web("#FAFDD6"));
             }
         });
-        settings.getStyleClass().add("settings");
 
         VBox main = new VBox(15);
         main.getChildren().addAll(stateLabel, round, timer, studyCircles, start);

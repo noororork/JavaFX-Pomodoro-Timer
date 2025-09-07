@@ -18,23 +18,37 @@
 
 }
 
-.stateLabel {
+.label {
     -fx-font-family: "Lucida Console";
-    -fx-padding: 0 0 -15 0; 
+    -fx-text-fill: #FAFDD6;
+    -fx-font-size: 10px;
+    -fx-padding: 5;
 }
 
-.round {
+.label.enterTimeLabel {
     -fx-font-family: "Lucida Console";
+    -fx-text-fill: #FAFDD6;
+    -fx-padding: 10;
+    -fx-font-size: 11px; 
+}
+
+.label.stateLabel {
+    -fx-padding: 0 0 -15 0; 
+    -fx-text-fill: #647FBC;
+    -fx-font-size: 60px;
+}
+
+.label.round {
     -fx-padding: 3 0 -10 0;
+    -fx-font-size: 15px;
 }
 
 .settingsScene {
     -fx-background-color: #91ADC8;
 }
 
-.settingsTitle {
+.label.settingsTitle {
     -fx-font-size: 20px;
-    -fx-font-family: "Lucida Console";
     -fx-padding: 10;
 }
 
@@ -43,6 +57,21 @@
     -fx-font-family: "Lucida Console";
     -fx-background-color: #AED6CF;
     -fx-padding: 25 20 0 0;
+}
+
+.spinner {
+    -fx-background-color: #AED6CF;
+    -fx-border-color: #AED6CF;
+}
+
+.button.saveTime {
+    -fx-background-color: #647FBC;
+    -fx-text-fill: #FAFDD6;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 20px;
+    -fx-font-size: 12px;
+    -fx-font-family: "Lucida Console";
+
 }
 
 .root {

@@ -6,6 +6,11 @@ public class ShortBreak extends State {
     public int getTime(){
         return time;
     }
+    
+    @Override
+    public void setTime(int time){
+        this.time = time;
+    }
 
     @Override
     public String getName(){

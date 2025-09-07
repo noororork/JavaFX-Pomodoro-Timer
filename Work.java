@@ -8,6 +8,11 @@ public class Work extends State{
     }
 
     @Override
+    public void setTime(int time){
+        this.time = time;
+    }
+
+    @Override
     public String getName(){
         return name;
     }

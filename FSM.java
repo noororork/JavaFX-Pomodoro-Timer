@@ -1,7 +1,7 @@
 public class FSM {
     private State currentState;
     private int roundCounter = 1;
-    private int complete = 1;
+    private int wholeCounter = 1;
 
     private Work work;
     private LongBreak longBreak;
@@ -18,16 +18,32 @@ public class FSM {
         return currentState;
     }
 
+    public void setCurrentState(State currentState){
+        this.currentState = currentState;
+    }
+
     public int getTime(){
         return currentState.getTime();
+    }
+
+    public void setTime(int time, State state){
+        state.setTime(time);
     }
 
     public int getRoundCounter(){
         return roundCounter;
     }
 
+    public void setRoundCounter(int roundCounter){
+        this.roundCounter = roundCounter;
+    }
+
     public int getWholeCounter(){
-        return complete;
+        return wholeCounter;
+    }
+
+    public void setWholeCounter(int wholeCounter){
+        this.wholeCounter = wholeCounter;
     }
 
     public String getCurrentName(){
@@ -39,7 +55,7 @@ public class FSM {
         if (currentState instanceof Work){
             if (roundCounter == 4){
                 roundCounter = 1;
-                complete++;
+                wholeCounter++;
             }else{
                 roundCounter++;
             }

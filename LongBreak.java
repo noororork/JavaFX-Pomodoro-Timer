@@ -8,6 +8,11 @@ public class LongBreak extends State {
     }
     
     @Override
+    public void setTime(int time){
+        this.time = time;
+    }
+
+    @Override
     public String getName(){
         return name;
     }
