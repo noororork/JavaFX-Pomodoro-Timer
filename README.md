@@ -1,18 +1,16 @@
 # ⏳ Pomodoro Timer (JavaFX + FSM)
 
 A **Pomodoro Timer application** built with **JavaFX** and a **Finite State Machine (FSM)** architecture.  
-This project implements the classic [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique), allowing users to focus on productivity while learning advanced Java design patterns and UI development.
+This project implements the classic [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique), something that I use constantly while studying. I wanted to create an application that I would actually use, and implement features that I would look for in such an app.
 
 ---
 
 ## ✨ Features
 
 - 🎛️ **Finite State Machine (FSM)** for managing work/break cycles
-- 🔄 **Custom State Classes** (`Work`, `ShortBreak`, `LongBreak`)
 - ⏱️ **Configurable Durations** (change work and break times dynamically)
 - 🎨 **Styled JavaFX UI** with custom CSS
-- 📐 **Overlay Settings Panel** (no extra stages, uses `StackPane` layering)
-- 📊 **Round & Cycle Counters** (track sessions and full Pomodoro cycles)
+- 📊 **Round & Cycle Counters** (track sessions and full Pomodoro cycles using Java Timeline)
 
 ---
 
@@ -27,13 +25,12 @@ This project implements the classic [Pomodoro Technique](https://en.wikipedia.or
 
 ### 🎨 JavaFX Development
 - Built responsive UIs with `VBox`, `StackPane`, and alignment controls.
-- Created **overlay panels** (settings menu) inside a single stage using visibility toggling rather than separate windows.
 - Applied **JavaFX CSS** for custom fonts, colors, and backgrounds.
 - Managed user interactions via `setOnAction` event handlers.
+- Used Java **Timeline** to manage timings and avoid conflicts
 
 ### 📐 Software Engineering Practices
 - Clean separation of **business logic** (FSM + States) and **UI logic** (JavaFX layouts, CSS).
-- Debugged and solved UI issues such as **transparent overlays** and **node alignment**.
 - Wrote extensible, maintainable, and modular code following OOP principles.
 
 ## 📂 Project Structure
@@ -54,6 +51,6 @@ src/
 Java 21+
 JavaFX SDK installed and configured
 
-To compile and run:
+### To compile and run:
 javac --module-path "<javafx_path>" --add-modules=javafx.controls src/*.java
-java --module-path "<javafx_path>"  --add-modules=javafx.controls Main
+java --module-path "<javafx_path>"  --add-modules=javafx.controls -cp src/Main
