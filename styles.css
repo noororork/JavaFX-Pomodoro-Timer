@@ -74,6 +74,50 @@
 
 }
 
+.button.color1 {
+    -fx-background-color: "#AED6CF";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.button.color2 {
+    -fx-background-color: "#93DA97";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.button.color3 {
+    -fx-background-color: "#c688beff";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.button.color4 {
+    -fx-background-color: "#E9A5F1";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    -fx-min-width: 20px;
+    -fx-min-height: 20px;
+    -fx-max-width: 20px;
+    -fx-max-height: 20px;
+}
+
+.label.chooseColors {
+    -fx-font-size: 11px;
+}
+
 .root {
     -fx-background-color: -bg-color;
 }

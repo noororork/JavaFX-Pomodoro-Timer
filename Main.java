@@ -217,6 +217,7 @@ public class Main extends Application{
 
         // Color palette picker
         chooseColors = new Label("Choose color palette:");
+        chooseColors.getStyleClass().add("chooseColors");
         color1 = new Button("");
         color1.getStyleClass().add("color1");
         color1.setOnAction(e -> {
@@ -237,7 +238,7 @@ public class Main extends Application{
             settings.setTextFill(Color.web(darkColor[0]));
             fillCircles();
         });
-        color2 = new Button("");
+        color2 = new Button();
         color2.getStyleClass().add("color2");
         color2.setOnAction(e -> {
             lightColor[0] = "#E8FFD7";
